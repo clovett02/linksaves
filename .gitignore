@@ -1,3 +1,4 @@
-*_pycache_*
-*_pycache_*
-/venv
+__pycache__
+venv
+dist
+Linksaves.egg-info
