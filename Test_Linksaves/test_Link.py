@@ -5,8 +5,9 @@ from Linksaves.Save import Save
 from typing import List
 
 #path to this test folder
-currentdir="/home/chris/Repositories/General/ubuntu-desktop-24/Install/Test_Linksaves"
+currentdir="/home/$USER/Repositories/General/ubuntu-desktop-24/Install/Test_Linksaves"
 testdir=f"{currentdir}/TestDirectory"
+testdir=os.path.expandvars(testdir)
 
 locallinkfolder=f"{testdir}/Local"
 remotedestination=f"{testdir}/Remote"
