@@ -2,6 +2,7 @@ import unittest
 import os
 from Linksaves.Link import Link
 from Linksaves.Save import Save
+from typing import List
 
 #path to this test folder
 currentdir="/home/chris/Repositories/General/ubuntu-desktop-24/Install/Test_Linksaves"
@@ -29,13 +30,13 @@ save2 = Save(testgamename2, linuxpath=testgamelocalpath2, gsmname=gsmname2, gsmp
 
 
 numofsaves=5
-testgamenames: list[str] = [f"Test Game {i}" for i in range(numofsaves)]
-gsmnames: list[str] = [f"TestGame{i}" for i in range(numofsaves)]
-gsmpaths: list[str] = [f"/{i}0{i}/{i}00" for i in range(numofsaves)]
-testgameremotepaths: list[str] = [f"{remotedestination}/{gsmnames[i]}{gsmpaths[i]}" for i in range(numofsaves)]
-testgamelocalpaths: list[str] = [f"{locallinkfolder}/{testgamenames[i]}/Saves" for i in range(numofsaves)]
+testgamenames: List[str] = [f"Test Game {i}" for i in range(numofsaves)]
+gsmnames: List[str] = [f"TestGame{i}" for i in range(numofsaves)]
+gsmpaths: List[str] = [f"/{i}0{i}/{i}00" for i in range(numofsaves)]
+testgameremotepaths: List[str] = [f"{remotedestination}/{gsmnames[i]}{gsmpaths[i]}" for i in range(numofsaves)]
+testgamelocalpaths: List[str] = [f"{locallinkfolder}/{testgamenames[i]}/Saves" for i in range(numofsaves)]
 
-saves: list[Save] = [Save(testgamenames[i], linuxpath=testgamelocalpaths[i], gsmname=gsmnames[i], gsmpath=gsmpaths[i]) for i in range(numofsaves)]
+saves: List[Save] = [Save(testgamenames[i], linuxpath=testgamelocalpaths[i], gsmname=gsmnames[i], gsmpath=gsmpaths[i]) for i in range(numofsaves)]
 
 
 class test_Link(unittest.TestCase):
