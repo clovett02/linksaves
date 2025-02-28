@@ -1,0 +1,29 @@
+stages:
+  - test
+  - build
+  - deploy
+
+test-stage:
+  stage: test
+  tags:
+    - python
+  script:
+    - python3 -m venv ./venv
+    - source ./venv/bin/activate
+    - pip install -r requirements.txt
+    - python3 -m unittest
+
+build-stage:
+  stage: build
+  tags:
+    - python
+  script:
+    - python3 -m build ./Linksaves
+
+deploy-stage:
+  stage: deploy
+  tags:
+    - python
+  script:
+    - echo -e '[distutils]\nindex-servers =\n    thor\n\n[thor]\nrepository:http://thor.pypi\nusername:gitlabrunner\npassword:password' > ~/.pypirc
+    - python3 -m twine upload --repository thor ./Linksaves/dist/*
