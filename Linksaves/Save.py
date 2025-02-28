@@ -1,4 +1,5 @@
 import mysql.connector as connector
+from typing import List
 
 
 class Save:
@@ -79,11 +80,11 @@ class Saves:
             user="linksavesScript",
             password="mchs2009")
         
-        self._saves: list[Save] = []
+        self._saves: List[Save] = []
         self.ExecuteQuery()
 
     @property
-    def Saves(self) -> list[Save]:
+    def Saves(self) -> List[Save]:
         return self._saves
 
     def ExecuteQuery(self):
