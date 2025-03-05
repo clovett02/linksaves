@@ -3,7 +3,7 @@ import pathlib
 
 setup(
     name="Linksaves",
-    version="0.9.0",
+    version="0.9.1",
     packages=find_packages(),
     # packages=["."],
     install_requires=["mysql-connector-python>=9.2.0"],
