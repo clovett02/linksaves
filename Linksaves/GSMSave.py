@@ -7,7 +7,6 @@ class GSMSave:
         self._gsminfopath = ""
         self._localsavepath = ""
         self._specialpath = ""
-        self._shortpath = ""
         self._steamgameid = steamgameID
         self.GSMInfoPath = filepath
         self.GetPath()
@@ -20,25 +19,6 @@ class GSMSave:
                     self.SpecialPath = row[pathstart:]
                 if "Path=" in row:
                     pathstart=row.index("=") + 1
-
-
-    @property
-    def SpecialPath(self) -> str:
-        return self._specialpath
-    
-    @SpecialPath.setter
-    def SpecialPath(self, pathstr):
-        if "%DOCUMENTS%" in pathstr:
-            self._specialpath = os.path.expanduser("~/.local/share/Steam/steamapps" +
-                                    f"/compatdata/{self.SteamGameID}/pfx/drive_c/users" +
-                                    "/steamuser/Documents")
-        elif pathstr == r"":
-            self._specialpath = os.path.expanduser("~/")
-
-    @property
-    def ShortPath(self) -> str:
-        return self._shortpath
-
     @property
     def GSMInfoPath(self) -> str:
         """Path to Gamesaves Manager Info File including filename. The '$$ GSM_DATA $$' file."""
@@ -59,9 +39,27 @@ class GSMSave:
         """The full path to the save directory on client PC"""
         return self._localsavepath
 
-    @LocalSavePath.setter
-    def LocalSavePath(self, path):
-        pass
+    @property
+    def SpecialPath(self) -> str:
+        """Returns the variable path starting from 'users'.
+        I.E for '~/.local/share/Steam/steamapps/compatdata/{SteamGameID}/pfx/drive_c/users/steamuser/Documents',
+        this property would only return '/steamuser/Documents' when %DOCUMENTS% is set as
+        the special path"""
+        return self._specialpath
+    
+    @SpecialPath.setter
+    def SpecialPath(self, pathstr):
+        if "%DOCUMENTS%" in pathstr:
+            self._specialpath = os.path.expanduser("~/.local/share/Steam/steamapps" +
+                                    f"/compatdata/{self.SteamGameID}/pfx/drive_c/users" +
+                                    "/steamuser/Documents")
+        elif pathstr == r"":
+            self._specialpath = os.path.expanduser("~/")
+
+    @property
+    def SteamCompatUserDir(self) -> str:
+        return f"{self.SteamCompatDir}/{self.SteamGameID}/pfx/drive_c/users/steamuser"
+
 
     @property
     def SteamCompatDir(self) -> str:
