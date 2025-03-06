@@ -14,10 +14,17 @@ class test_GSMSaves(unittest.TestCase):
                          r"Sync & Link/BatmanArkhamAsylum(GOTYEdition)/122/$$ GSM_DATA $$",
                           AGS.GSMInfoPath)
         
+    def test_CompatDir(self):
+        AGS: GSMSave = GSMSave(ArkhamAsylumID, testpath)
+        self.assertEqual(f"{SteamCompatDir}", AGS.SteamCompatDir)
+
+    def test_LocalSavePath(self):
+        AGS: GSMSave = GSMSave(ArkhamAsylumID, testpath)
+        self.assertEqual(f"{SteamCompatDir}{DocumentsFolder}", )
+        
     def test_SpecialPath(self):
         AGS: GSMSave = GSMSave(ArkhamAsylumID, testpath)
         self.assertEqual(f"{SteamCompatDir}/{ArkhamAsylumID}{DocumentsFolder}", AGS.SpecialPath)
-        # print(AGS.SpecialPath)
 
 if __name__ == "__main__":
     unittest.main()
