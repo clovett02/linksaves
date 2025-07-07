@@ -1,6 +1,6 @@
 import mysql.connector as connector
 from typing import List
-
+import os
 
 class Save:
     """Stores Save data"""
@@ -61,7 +61,7 @@ class Save:
     
 
 class Saves:
-    UserDir: str = "/home/chris"
+    UserDir: str = os.path.expanduser('~')
     SteamCompatDir: str = f"{UserDir}/.local/share/Steam/steamapps/compatdata"
     SteamUserdataDir: str = f"{UserDir}/.local/share/Steam/userdata/72532730"
     BaseRemotePath: str = "/media/Linked_Gamesaves/GameSave Manager; Sync & Link"
