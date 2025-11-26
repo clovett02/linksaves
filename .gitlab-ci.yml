@@ -8,7 +8,7 @@ test-stage:
   tags:
     - python
   script:
-    - apt install python3.12-venv -y
+    - sudo apt install python3.12-venv -y
     - python3 -m venv ./venv
     - source ./venv/bin/activate
     - pip install -r requirements.txt
@@ -21,7 +21,7 @@ build-stage:
   rules:
   - if: $CI_COMMIT_BRANCH == "main"
   script:
-      - apt install python3.12-venv -y
+      - sudo apt install python3.12-venv -y
       - python3 -m venv ./venv
       - source ./venv/bin/activate
       - pip install -r requirements.txt
@@ -35,7 +35,7 @@ deploy-stage:
     - if: $CI_COMMIT_BRANCH == "main"  
   script:
     - echo -e '[distutils]\nindex-servers =\n    thor\n\n[thor]\nrepository:http://thor.pypi\nusername:gitlabrunner\npassword:password' > ~/.pypirc
-    - apt install python3.12-venv -y
+    - sudo apt install python3.12-venv -y
     - python3 -m venv ./venv
     - source ./venv/bin/activate
     - pip install -r requirements.txt
