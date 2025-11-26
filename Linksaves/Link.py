@@ -1,4 +1,5 @@
 import os
+import shutil
 from Linksaves.Save import Save
 
 class Link:
@@ -17,8 +18,9 @@ class Link:
             if (os.path.islink(self._localdest)):
                 self.CheckLink()
             else:
-                print(f"Removing Directory and Creating Link for {self._save.Name}")
-                self.removefolder(self._localdest)
+                print(f"Copying Existing Files, Removing Directory and Creating Link for {self._save.Name}")
+                self.CopyExistingFiles()
+                self.RemoveFolder(self._localdest)
                 os.symlink(self._remotetarget, self._localdest)
         else:
             print(f"No directory or path exists for {self._save.Name}. Creating symlink.")
@@ -28,7 +30,7 @@ class Link:
             os.rmdir(self._localdest)
             os.symlink(self._remotetarget, self._localdest)
     
-    def removefolder(self, folderpath):
+    def RemoveFolder(self, folderpath: str):
         """Recursive function for removing a folder and all items in it"""
         if os.path.isfile(folderpath):
             os.remove(folderpath)
@@ -38,7 +40,7 @@ class Link:
             return
         if len(os.listdir(folderpath)) > 0:
             for f in os.listdir(folderpath):
-                self.removefolder(os.path.join(folderpath, f))
+                self.RemoveFolder(os.path.join(folderpath, f))
             os.rmdir(folderpath)
         else:
             os.rmdir(folderpath)
@@ -52,3 +54,7 @@ class Link:
             print(f"Replacing link for {self._save.Name} with correct symlink")
             os.remove(self._localdest)
             os.symlink(self._remotetarget, self._localdest)
+
+    def CopyExistingFiles(self):
+        """Copys files from existing folder to link destination."""
+        shutil.copy2(self._localdest, self._remotetarget)

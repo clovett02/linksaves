@@ -90,7 +90,7 @@ class Saves:
     def ExecuteQuery(self):
         cursor=self._db.cursor()
         cursor.execute(self.sql)
-        queryresult = cursor.fetchall()
+        queryresult: List[dict[int, str]] = cursor.fetchall()
         for row in queryresult:
             self.Saves.append(Save(
                 name=row[0],

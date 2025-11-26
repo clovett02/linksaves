@@ -17,6 +17,8 @@ build-stage:
   stage: build
   tags:
     - python
+  rules:
+  - if: $CI_COMMIT_BRANCH == "main"
   script:
       - python3 -m venv ./venv
       - source ./venv/bin/activate
@@ -27,6 +29,8 @@ deploy-stage:
   stage: deploy
   tags:
     - python
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"  
   script:
     - echo -e '[distutils]\nindex-servers =\n    thor\n\n[thor]\nrepository:http://thor.pypi\nusername:gitlabrunner\npassword:password' > ~/.pypirc
     - python3 -m venv ./venv
