@@ -57,4 +57,6 @@ class Link:
 
     def CopyExistingFiles(self):
         """Copys files from existing folder to link destination."""
-        shutil.copy2(self._localdest, self._remotetarget)
+        files: list[str] = os.listdir(self._localdest)
+        for f in files:
+            shutil.copy(os.path.join(self._localdest, f), self._remotetarget)

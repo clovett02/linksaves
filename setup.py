@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="Linksaves",
-    version="0.9.2",
+    version="0.9.3",
     packages=find_packages(),
     # packages=["."],
     install_requires=["mysql-connector-python>=9.2.0"],
