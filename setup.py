@@ -3,10 +3,10 @@ from setuptools import setup, find_packages
 
 setup(
     name="Linksaves",
-    version="0.9.3",
+    version="0.9.4",
     packages=find_packages(),
     # packages=["."],
-    install_requires=["mysql-connector-python>=9.2.0"],
+    install_requires=["requests>=2.32.5"],
     long_description="A simple script for creating symbolic links for gamesaves.",
     long_description_content_type="text/markdown"
 )
