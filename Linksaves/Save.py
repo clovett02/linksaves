@@ -1,6 +1,7 @@
-import mysql.connector as connector
 from typing import List
 import os
+import requests
+import json
 
 class Save:
     """Stores Save data"""
@@ -65,40 +66,35 @@ class Saves:
     SteamCompatDir: str = f"{UserDir}/.local/share/Steam/steamapps/compatdata"
     SteamUserdataDir: str = f"{UserDir}/.local/share/Steam/userdata/72532730"
     BaseRemotePath: str = "/media/Linked_Gamesaves/GameSave Manager; Sync & Link"
-    sql=""" SELECT 
-                GameName, 
-                linux,
-                GSMName, 
-                GSMLocation  
-            FROM gamesaves.locations 
-            ORDER BY GameName;"""
     def __init__(self, steamuserdatadir:str="", userdir:str="", 
                  baseremotepath:str=""):
         """"Stores save info from DB in Save objects"""
-        self._db = connector.connect(
-            host="thor.mysql",
-            user="linksavesScript",
-            password="mchs2009")
-        
-        self._saves: List[Save] = []
+        self._saves: list[Save] = []
         self.ExecuteQuery()
 
     @property
-    def Saves(self) -> List[Save]:
+    def Saves(self) -> list[Save]:
         return self._saves
-
-    def ExecuteQuery(self):
-        cursor=self._db.cursor()
-        cursor.execute(self.sql)
-        queryresult: List[dict[int, str]] = cursor.fetchall()
-        for row in queryresult:
-            self.Saves.append(Save(
-                name=row[0],
-                linuxpath=row[1],
-                gsmname=row[2],
-                gsmpath=row[3],
+    
+    @Saves.setter
+    def Saves(self, jsonlist: list[dict]):
+        for row in jsonlist:
+            self._saves.append(Save(
+                name=row['gameName'],
+                linuxpath=row['linux'],
+                gsmname=row['gsmname'],
+                gsmpath=row['gsmlocation'],
                 steamcompatpath=self.SteamCompatDir,
                 steamuserdatapath=self.SteamUserdataDir,
                 userdir=self.UserDir,
                 baseremotepath=self.BaseRemotePath
-                ))
+
+            ))
+    
+    def GetSaves(self) -> list[dict]:
+        """Returns Saves as list of dictionary objects."""
+        response = requests.get("http://thor.gamesaveapi/api/gamesave/all")
+        return response.json()
+
+    def ExecuteQuery(self):
+        self.Saves = self.GetSaves()
