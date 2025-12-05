@@ -1,9 +1,9 @@
 import os
 import shutil
-from Linksaves.Save import Save
+from Linksaves.Game import Game
 
 class Link:
-    def __init__(self, save: Save):
+    def __init__(self, save: Game):
         """Checks and creates symlink"""
         self._remotetarget=save.RemotePath
         self._localdest=save.LinuxPath

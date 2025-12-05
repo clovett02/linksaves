@@ -1,7 +1,7 @@
-from Linksaves.Save import Saves
+from Linksaves.Games import Games
 from Linksaves.Link import Link
 
 if __name__ == "__main__":
-    saves = Saves()
-    for s in saves.Saves:
+    games = Games()
+    for s in games.Saves:
         Link(s)
