@@ -1,0 +1,17 @@
+{
+    "linuxLocations": [
+        {
+            "isFile": false,
+            "isFolder": true,
+            "gameId": 0,
+            "localLocation": "$UserDir/.local/share/aspyr-media/borderlands 2/willowgame/savedata/76561198032798458",
+            "gsmlocation": "/1729/76561198032798458",
+            "game": null
+        }
+    ],
+    "id": 22,
+    "steamId": "49520",
+    "gameName": "Borderlands 2",
+    "steamName": null,
+    "gsmname": "Borderlands2"
+}
