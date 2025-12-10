@@ -1,24 +1,20 @@
 
 from Linksaves.BaseLocations import BaseLocations
-from Linksaves.LinuxSaveDTO import LinuxSaveDTO
+from Linksaves.LinuxSave import LinuxSave
 import requests
+# from pathlib import Path
 
 dicttype = dict[str, str | list[dict[str, str]]]
 
 class Game:
     """Stores Game and Save data"""
-    # def __init__(self, linuxsaves: list[LinuxSaveDTO], baselocationdata: BaseLocations) -> None:
     def __init__(self) -> None:
-        # self._baselocations: BaseLocations = baselocationdata
-        # self._LinuxLocations: list[LinuxSaveDTO] = linuxsaves
-        # self._steamcompatpath = baselocationdata.SteamCompatPath
-        # self._steamuserdatapath = baselocationdata.SteamUserDataPath
-        self._baselocations: BaseLocations
-        self._LinuxLocations: list[LinuxSaveDTO]
-        self._id:str
-        self._steamid:str
-        self._name:str
-        self._gsmname:str
+        self._baselocations: BaseLocations = BaseLocations()
+        self._LinuxLocations: list[LinuxSave] = []
+        self._id:str = ""
+        self._steamid:str = ""
+        self._name:str = ""
+        self._gsmname:str = ""
 
     @property
     def SteamID(self) -> str:
@@ -33,8 +29,12 @@ class Game:
     def GSMName(self) -> str:
         """Name in Gamesave Manager Folder"""
         return self._gsmname
-
-    def SetDataFromAPIResponse(self, jsondata: dicttype):
+    
+    @property
+    def LinuxLocations(self) -> list[LinuxSave]:
+        return self._LinuxLocations
+    
+    def SetDataFromAPIResponse(self, jsondata: dicttype) -> None:
         if isinstance(jsondata["id"], str):
             self._id = jsondata["id"]
         if isinstance(jsondata["steamId"], str):
@@ -45,9 +45,9 @@ class Game:
             self._gsmname = jsondata["gsmname"]
         for r in jsondata["linuxLocations"]:
             if isinstance(r, dict):
-                self._LinuxLocations.append(LinuxSaveDTO(r, self._baselocations)) 
+                self._LinuxLocations.append(LinuxSave(r)) 
 
-    def LoadDataFromAPI(self, gameid: str):
+    def LoadDataFromAPI(self, gameid: str) -> None:
         jsondata: dicttype = requests.get(f"http://thor.gamesaveapi/api/gamesave/byid/{gameid}").json()
         self.SetDataFromAPIResponse(jsondata)
     

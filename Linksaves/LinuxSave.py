@@ -1,9 +1,8 @@
 
 from Linksaves.BaseLocations import BaseLocations
 
-class LinuxSaveDTO:
-
-    def __init__(self, loc: dict[str,str], baselocationdata: BaseLocations) -> None:
+class LinuxSave:
+    def __init__(self, loc: dict[str,str]) -> None:
         """
         Stores data for Linux Location. Used by Game object.
         
@@ -13,12 +12,12 @@ class LinuxSaveDTO:
         :param baselocationdata: Description
         :type baselocationdata: BaseLocations
         """
+        self._baselocationdata = BaseLocations()
         self._LocalLocation = ""
         self.LocalLocation = loc["localLocation"]
         self._GsmLocation = loc["gsmlocation"]
         self._IsFile = loc["isFile"]
         self._IsFolder = loc["isFolder"]
-        self._baselocationdata = baselocationdata
 
     
     @property
