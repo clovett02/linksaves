@@ -2,16 +2,11 @@ import os
 import requests
 from Linksaves.Game import Game
 from Linksaves.BaseLocations import BaseLocations
+from pathlib import Path
 
 dicttype = dict[str, str | list[dict[str, str]]]
 
 class Games:
-    
-    UserDir: str = os.path.expanduser('~')
-    SteamCompatDir: str = f"{UserDir}/.local/share/Steam/steamapps/compatdata"
-    SteamUserdataDir: str = f"{UserDir}/.local/share/Steam/userdata/72532730"
-    BaseRemotePath: str = "/media/Linked_Gamesaves/GameSave Manager; Sync & Link"
-    
     def __init__(self, steamuserdatadir:str="", userdir:str="", 
                  baseremotepath:str=""):
         """"Stores Game info from DB in Game objects"""

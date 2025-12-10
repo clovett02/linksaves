@@ -34,6 +34,14 @@ class Game:
     def LinuxLocations(self) -> list[LinuxSave]:
         return self._LinuxLocations
     
+    def __str__(self):
+        result = f"Game Name: {self.Name}\nGSM Name: {self.GSMName}\n"
+        i=1
+        for s in self._LinuxLocations:
+            remotepath = self._baselocations.BaseRemotePath + f"/{self.GSMName}" + f"{s.GsmLocation}"
+            result += f"LocalLocation {i}: {s.LocalLocation}\nRemotePath {i}: {remotepath}\nIsFolder {i}: {s._IsFolder}\n"
+        return result
+    
     def SetDataFromAPIResponse(self, jsondata: dicttype) -> None:
         if isinstance(jsondata["id"], str):
             self._id = jsondata["id"]
@@ -45,7 +53,7 @@ class Game:
             self._gsmname = jsondata["gsmname"]
         for r in jsondata["linuxLocations"]:
             if isinstance(r, dict):
-                self._LinuxLocations.append(LinuxSave(r)) 
+                self._LinuxLocations.append(LinuxSave(r))
 
     def LoadDataFromAPI(self, gameid: str) -> None:
         jsondata: dicttype = requests.get(f"http://thor.gamesaveapi/api/gamesave/byid/{gameid}").json()
