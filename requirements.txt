@@ -26,4 +26,4 @@ rfc3986==2.0.0
 rich==14.2.0
 SecretStorage==3.5.0
 twine==6.2.0
-urllib3==2.5.0
+urllib3==2.6.1
