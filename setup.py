@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="Linksaves",
-    version="0.9.5",
+    version="0.9.6",
     packages=find_packages(),
     package_data={"Linksaves": ["./baselocationdata.json"]},
     include_package_data=True,
