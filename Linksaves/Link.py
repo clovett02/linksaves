@@ -1,6 +1,7 @@
 import os
 import shutil
 
+
 class Link:
     def __init__(self, gamename: str, localdest: str, remotepath: str):
         """Checks and creates symlink"""
@@ -38,7 +39,7 @@ class Link:
             os.symlink(self._remotetarget, self._localdest)
             
         self._successfullylinked = True
-    
+
     def RemoveFolder(self, folderpath: str):
         """Recursive function for removing a folder and all items in it"""
         if os.path.isfile(folderpath):
@@ -69,23 +70,49 @@ class Link:
         self._successfullylinked = True
 
     def CopyExistingFiles(self):
-        """Copys files from existing folder to link destination."""
+        """Copies files from existing folder to link destination."""
         files: list[str] = os.listdir(self._localdest)
         for f in files:
-            shutil.copy(os.path.join(self._localdest, f), self._remotetarget)
+            if (os.path.isfile(os.path.join(self._remotetarget, f))):
+                if (self.AskBeforeCopyingFiles(f)):
+                    os.remove(os.path.join(self._remotetarget, f))
+                    shutil.copy(os.path.join(self._localdest, f), self._remotetarget)
+                else:
+                    continue
+            elif not (os.path.isfile(os.path.join(self._remotetarget, f))):
+                shutil.copy(os.path.join(self._localdest, f), self._remotetarget)
+
+    def AskBeforeCopyingFiles(self, f: str) -> bool:
+        """Confirms if files need to be copied. This is called when files already
+        exist at the remote path location. Returns boolean."""
+        print(f"File named: {f} \nalready exists at the given remote " +
+              "path. Do you want to delete the remote file and copy " +
+              "the local one?")
+
+        ans: bool = None
+
+        while (ans is None):
+            print("Please enter Y/Yes or N/No.")
+            inp: str = input()
+            inp = inp.lower()
+            if (inp == "y" or inp == "yes"):
+                ans = True
+            elif (inp == "n" or inp == "no"):
+                ans = False
+        return ans
 
     @property
     def SuccessfullyLinked(self) -> bool:
         return self._successfullylinked
-    
+
     @property
     def SymlinkAlreadyExists(self) -> bool:
         return self._symlinkalreadyexists
-    
+
     @property
     def Skipped(self) -> bool:
         return self._skipped
-    
+
     @property
     def SymlinkCorrected(self) -> bool:
         return self._symlinkcorrected
