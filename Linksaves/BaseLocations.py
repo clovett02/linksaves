@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 import json
 
+
 class BaseLocations:
     def __init__(self) -> None:
         """Loads base location data from file"""
@@ -15,17 +16,17 @@ class BaseLocations:
     @property
     def SteamCompatPath(self) -> str:
         return self._steamcompatpath
-    
+
     @SteamCompatPath.setter
-    def SteamCompatPath(self, p:str):
+    def SteamCompatPath(self, p: str):
         self._steamcompatpath = p
 
     @property
     def SteamUserDataPath(self) -> str:
         return self._steamuserdatapath
-    
+
     @SteamUserDataPath.setter
-    def SteamUserDataPath(self, p:str):
+    def SteamUserDataPath(self, p: str):
         self._steamuserdatapath = p
 
     @property
@@ -33,7 +34,7 @@ class BaseLocations:
         return self._baseremotepath
 
     @BaseRemotePath.setter
-    def BaseRemotePath(self, p:str):
+    def BaseRemotePath(self, p: str):
         self._baseremotepath = p
 
     @property
@@ -43,7 +44,7 @@ class BaseLocations:
     def LoadLocationData(self):
         filepath = Path(__file__).parent.joinpath("baselocationdata.json")
         with open(filepath, "r") as f:
-            jsondata: dict[str,str] = json.load(f)
+            jsondata: dict[str, str] = json.load(f)
             self.SteamCompatPath = jsondata["steamcompatpath"]
             self.SteamUserDataPath = jsondata["steamuserdatapath"]
             self.BaseRemotePath = jsondata["baseremotepath"]

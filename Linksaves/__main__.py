@@ -8,5 +8,7 @@ if __name__ == "__main__":
     b = BaseLocations()
     for g in games.Games:
         for s in g.LinuxLocations:
-            remotepath = f"{Path(b.BaseRemotePath).joinpath(g.GSMName).resolve()}" + f"{s.GsmLocation}"
+            remotepath = \
+                f"{Path(b.BaseRemotePath).joinpath(g.GSMName).resolve()}" + \
+                f"{s.GsmLocation}"
             Link(g.Name, s.LocalLocation, f"{remotepath}")
